@@ -1,0 +1,100 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Tenant {
+  id        String   @id @default(cuid())
+  name      String
+  domain    String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  users     User[]
+  clients   Client[]
+  plans     Plan[]
+  classes   Class[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  name      String?
+  email     String   @unique
+  password  String?
+  role      String   @default("STAFF") // ADMIN, RECEPTION, COACH, STAFF
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  classesAsCoach Class[]
+}
+
+model Client {
+  id        String   @id @default(cuid())
+  name      String
+  email     String?  
+  phone     String?
+  age       Int?
+  status    String   @default("LEAD") // LEAD, ACTIVE, INACTIVE
+  notes     String?
+  tenantId  String
+  tenant    Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  subscriptions Subscription[]
+  attendances   Attendance[]
+}
+
+model Plan {
+  id           String   @id @default(cuid())
+  name         String
+  description  String?
+  price        Float
+  billingCycle String   @default("MONTHLY") // MONTHLY, YEARLY
+  isActive     Boolean  @default(true)
+  tenantId     String
+  tenant       Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  subscriptions Subscription[]
+}
+
+model Subscription {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  planId    String
+  plan      Plan     @relation(fields: [planId], references: [id], onDelete: Restrict)
+  startDate DateTime @default(now())
+  endDate   DateTime?
+  status    String   @default("ACTIVE") // ACTIVE, CANCELED, EXPIRED
+}
+
+model Class {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  capacity    Int
+  startTime   DateTime
+  endTime     DateTime
+  coachId     String?
+  coach       User?    @relation(fields: [coachId], references: [id], onDelete: SetNull)
+  tenantId    String
+  tenant      Tenant   @relation(fields: [tenantId], references: [id], onDelete: Cascade)
+  
+  attendances Attendance[]
+}
+
+model Attendance {
+  id        String   @id @default(cuid())
+  clientId  String
+  client    Client   @relation(fields: [clientId], references: [id], onDelete: Cascade)
+  classId   String?
+  class     Class?   @relation(fields: [classId], references: [id], onDelete: SetNull)
+  checkInAt DateTime @default(now())
+}
