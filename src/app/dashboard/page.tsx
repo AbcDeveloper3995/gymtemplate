@@ -274,7 +274,7 @@ export default async function DashboardHome() {
                       <p className="text-zinc-500 text-sm">{sub.plan.name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-yellow-500 font-bold">{sub.endDate.toLocaleDateString()}</p>
+                      <p className="text-yellow-500 font-bold">{sub.endDate?.toLocaleDateString() || "-"}</p>
                       <p className="text-zinc-500 text-xs">{sub.client.phone || "Sin teléfono"}</p>
                     </div>
                   </li>
@@ -302,7 +302,7 @@ export default async function DashboardHome() {
                       <p className="text-zinc-500 text-sm">{sub.plan.name}</p>
                     </div>
                     <div className="text-right">
-                      <p className="text-red-500 font-bold">{sub.endDate.toLocaleDateString()}</p>
+                      <p className="text-red-500 font-bold">{sub.endDate?.toLocaleDateString() || "-"}</p>
                       <p className="text-zinc-500 text-xs">{sub.client.phone || "Sin teléfono"}</p>
                     </div>
                   </li>

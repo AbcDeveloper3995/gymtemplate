@@ -97,7 +97,7 @@ export async function renewSubscription(clientId: string, planName: string) {
     const endDate = new Date();
 
     // Si ya tenía una activa y vigente, sumarle a la fecha de vencimiento. Si ya venció, sumarle a la fecha de hoy.
-    if (currentSub && currentSub.endDate > startDate) {
+    if (currentSub && currentSub.endDate && currentSub.endDate > startDate) {
       endDate.setTime(currentSub.endDate.getTime());
       endDate.setDate(endDate.getDate() + days);
       

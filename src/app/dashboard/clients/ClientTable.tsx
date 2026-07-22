@@ -12,7 +12,7 @@ type ClientData = {
   status: string;
   subscriptions: {
     plan: { name: string };
-    endDate: Date;
+    endDate: Date | null;
   }[];
 };
 
@@ -56,7 +56,7 @@ export default function ClientTable({ clients }: { clients: ClientData[] }) {
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {filteredClients.map((client) => {
           const sub = client.subscriptions[0];
-          const isExpired = sub ? new Date(sub.endDate) < new Date() : true;
+          const isExpired = sub && sub.endDate ? new Date(sub.endDate) < new Date() : true;
           
           return (
             <div key={client.id} className="relative group bg-zinc-950/60 backdrop-blur-xl border border-yellow-500/30 rounded-2xl p-6 flex flex-col items-center text-center shadow-[0_0_15px_rgba(234,179,8,0.15)] hover:shadow-[0_0_25px_rgba(234,179,8,0.4)] hover:border-yellow-500/60 transition-all duration-300">
@@ -86,7 +86,7 @@ export default function ClientTable({ clients }: { clients: ClientData[] }) {
                 </div>
                 <div>
                   <p className="text-white font-bold text-sm">
-                    {sub ? new Date(sub.endDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : "-"}
+                    {sub && sub.endDate ? new Date(sub.endDate).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' }) : "-"}
                   </p>
                   <p className="text-zinc-500 text-[10px] uppercase tracking-widest mt-1">Vence</p>
                 </div>
@@ -188,14 +188,14 @@ export default function ClientTable({ clients }: { clients: ClientData[] }) {
                   <div>
                     <p className="text-xs font-bold text-zinc-500 uppercase tracking-widest mb-1">Vencimiento</p>
                     <p className="text-white font-medium">
-                      {selectedClient.subscriptions[0] 
+                      {selectedClient.subscriptions[0] && selectedClient.subscriptions[0].endDate
                         ? new Date(selectedClient.subscriptions[0].endDate).toLocaleDateString('es-ES', { dateStyle: 'long' }) 
                         : "N/A"
                       }
                     </p>
                   </div>
-                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${selectedClient.subscriptions[0] && new Date(selectedClient.subscriptions[0].endDate) >= new Date() ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
-                    {selectedClient.subscriptions[0] && new Date(selectedClient.subscriptions[0].endDate) >= new Date() ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" />}
+                  <div className={`w-8 h-8 rounded-full flex items-center justify-center ${selectedClient.subscriptions[0] && selectedClient.subscriptions[0].endDate && new Date(selectedClient.subscriptions[0].endDate) >= new Date() ? 'bg-green-500/20 text-green-500' : 'bg-red-500/20 text-red-500'}`}>
+                    {selectedClient.subscriptions[0] && selectedClient.subscriptions[0].endDate && new Date(selectedClient.subscriptions[0].endDate) >= new Date() ? <Check className="w-4 h-4" /> : <X className="w-4 h-4" />}
                   </div>
                 </div>
               </div>
