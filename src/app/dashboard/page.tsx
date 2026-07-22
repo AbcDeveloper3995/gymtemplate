@@ -1,6 +1,7 @@
 import { prisma } from "@/lib/prisma";
 import { Users, AlertTriangle, XOctagon, TrendingUp, DollarSign, CreditCard, Activity, Plus, CheckCircle, Target, HeartHandshake } from "lucide-react";
 import MembershipCharts from "./components/MembershipCharts";
+import RevenueChart from "./components/RevenueChart";
 import Link from "next/link";
 
 export default async function DashboardHome() {
@@ -313,12 +314,15 @@ export default async function DashboardHome() {
         </div>
       </div>
 
-      {/* Gráficos de Membresías */}
-      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '400ms', animationFillMode: 'backwards' }}>
-        <MembershipCharts data={chartData} />
+      {/* Gráfico de Evolución de Ingresos Mensuales */}
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 mt-8" style={{ animationDelay: '350ms', animationFillMode: 'backwards' }}>
+        <RevenueChart />
       </div>
 
-
+      {/* Gráficos de Membresías */}
+      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '450ms', animationFillMode: 'backwards' }}>
+        <MembershipCharts data={chartData} />
+      </div>
     </div>
   );
 }
