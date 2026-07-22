@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Home, Users, LogOut, Dumbbell, CreditCard, Calendar, Activity } from "lucide-react";
+import { Home, Users, LogOut, Dumbbell, CreditCard, Calendar } from "lucide-react";
 import DemoBanner from "@/components/DemoBanner";
 
 export const dynamic = "force-dynamic";
@@ -37,10 +37,6 @@ export default function DashboardLayout({
           <Link href="/dashboard/clients" className="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors group">
             <Users className="h-5 w-5 group-hover:text-primary transition-colors" />
             <span className="font-bold text-sm uppercase tracking-widest">Clientes</span>
-          </Link>
-          <Link href="/dashboard/activity" className="flex items-center gap-3 px-4 py-3 rounded-lg text-zinc-400 hover:text-white hover:bg-white/5 transition-colors group">
-            <Activity className="h-5 w-5 group-hover:text-primary transition-colors" />
-            <span className="font-bold text-sm uppercase tracking-widest">Actividad</span>
           </Link>
         </nav>
 

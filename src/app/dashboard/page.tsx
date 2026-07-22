@@ -1,5 +1,5 @@
 import { prisma } from "@/lib/prisma";
-import { Users, AlertTriangle, XOctagon, TrendingUp, DollarSign, CreditCard, Activity, Plus, CheckCircle, Target, HeartHandshake } from "lucide-react";
+import { Users, AlertTriangle, XOctagon, TrendingUp, DollarSign, CreditCard, Target, HeartHandshake } from "lucide-react";
 import MembershipCharts from "./components/MembershipCharts";
 import RevenueChart from "./components/RevenueChart";
 import Link from "next/link";
@@ -91,58 +91,6 @@ export default async function DashboardHome() {
     include: { client: true, plan: true },
     orderBy: { endDate: "desc" }
   });
-
-  // Recent Activity Feed
-  const recentAttendances = await prisma.attendance.findMany({
-    take: 5,
-    orderBy: { checkInAt: "desc" },
-    include: { client: true, class: true }
-  });
-
-  const recentSubscriptions = await prisma.subscription.findMany({
-    take: 5,
-    orderBy: { startDate: "desc" },
-    include: { client: true, plan: true }
-  });
-
-  const recentClients = await prisma.client.findMany({
-    take: 5,
-    orderBy: { createdAt: "desc" },
-  });
-
-  // Combine and sort
-  const activityFeed = [
-    ...recentAttendances.map(a => ({
-      id: `att-${a.id}`,
-      type: 'ATTENDANCE' as const,
-      title: `${a.client.name} hizo check-in`,
-      subtitle: a.class ? `Clase: ${a.class.name}` : 'Entrenamiento libre',
-      date: a.checkInAt,
-      icon: CheckCircle,
-      color: "text-blue-500",
-      bg: "bg-blue-500/10"
-    })),
-    ...recentSubscriptions.map(s => ({
-      id: `sub-${s.id}`,
-      type: 'SUBSCRIPTION' as const,
-      title: `${s.client.name} adquirió un plan`,
-      subtitle: `Plan: ${s.plan.name}`,
-      date: s.startDate,
-      icon: CreditCard,
-      color: "text-green-500",
-      bg: "bg-green-500/10"
-    })),
-    ...recentClients.map(c => ({
-      id: `cli-${c.id}`,
-      type: 'NEW_CLIENT' as const,
-      title: `Nuevo prospecto/cliente`,
-      subtitle: c.name,
-      date: c.createdAt,
-      icon: Plus,
-      color: "text-purple-500",
-      bg: "bg-purple-500/10"
-    }))
-  ].sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 8);
 
   // Transform planStats to array for the charts
   const chartData = Object.entries(planStats).map(([name, stats]) => ({
@@ -248,39 +196,6 @@ export default async function DashboardHome() {
 
         {/* Right Sidebar Column: Live Feed & Alerts (1 Column) */}
         <div className="xl:col-span-1 space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '300ms', animationFillMode: 'backwards' }}>
-          {/* Actividad Reciente */}
-          <div className="bg-zinc-950/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-white/[0.02]">
-              <div className="flex items-center gap-2">
-                <Activity className="w-4 h-4 text-primary animate-pulse" />
-                <h2 className="text-sm font-black text-white uppercase tracking-widest">Actividad en Vivo</h2>
-              </div>
-              <Link href="/dashboard/activity" className="text-xs text-primary font-bold hover:underline">Ver Todo</Link>
-            </div>
-            <div className="p-4 max-h-80 overflow-y-auto divide-y divide-white/5">
-              {activityFeed.length === 0 ? (
-                <p className="text-zinc-500 text-xs p-2">Sin actividad reciente.</p>
-              ) : (
-                activityFeed.map((item) => {
-                  const IconComponent = item.icon;
-                  return (
-                    <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
-                      <div className={`w-8 h-8 rounded-lg ${item.bg} ${item.color} flex items-center justify-center shrink-0 mt-0.5`}>
-                        <IconComponent className="w-4 h-4" />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <p className="text-xs font-bold text-white truncate">{item.title}</p>
-                        <p className="text-[11px] text-zinc-400 truncate">{item.subtitle}</p>
-                        <p className="text-[10px] text-zinc-500 mt-0.5">
-                          {item.date instanceof Date ? item.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Reciente'}
-                        </p>
-                      </div>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
 
           {/* Próximos a Vencer */}
           <div className="bg-zinc-950/80 backdrop-blur-xl border border-yellow-500/20 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
@@ -320,7 +235,6 @@ export default async function DashboardHome() {
                 <XOctagon className="w-4 h-4 text-red-500" />
                 <h2 className="text-sm font-black text-white uppercase tracking-widest">Vencidos</h2>
               </div>
-              <Link href="/dashboard/clients" className="text-xs text-primary font-bold hover:underline">Renovar</Link>
             </div>
             <div className="p-0 max-h-60 overflow-y-auto">
               {expired.length === 0 ? (
