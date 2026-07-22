@@ -6,6 +6,7 @@ import { Check, Dumbbell, MapPin, Zap, Target, Flame, Brain, TrendingUp, Trophy,
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { dataJson } from "@/data/dataJson";
+import DemoBanner from "@/components/DemoBanner";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -83,11 +84,13 @@ export default function LandingPage() {
         <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary/10 rounded-full blur-[100px] animate-pulse" style={{animationDelay: "2s"}}></div>
       </div>
 
-      {/* Navbar */}
-      <header className="px-6 py-4 flex items-center justify-between border-b border-white/10 bg-zinc-950/50 backdrop-blur-xl sticky top-0 z-50">
-        <div className="flex items-center gap-2">
-          {/* Custom Logo */}
-          <Link href="/" className="flex items-center pointer-events-none">
+      {/* Sticky Header with Demo Banner */}
+      <div className="sticky top-0 z-50 flex flex-col w-full">
+        <DemoBanner />
+        <header className="px-6 py-4 flex items-center justify-between border-b border-white/10 bg-zinc-950/70 backdrop-blur-xl">
+          <div className="flex items-center gap-2">
+            {/* Custom Logo */}
+            <Link href="/" className="flex items-center pointer-events-none">
             <img src="/img/logo.png" alt="Gym California Logo" className="h-14 w-14 md:h-16 md:w-16 rounded-full object-cover border border-white/20 shadow-md" />
           </Link>
         </div>
@@ -99,6 +102,7 @@ export default function LandingPage() {
           </button>
         </div>
       </header>
+      </div>
 
       <main className="flex-1 relative z-10">
         {/* Hero Section */}

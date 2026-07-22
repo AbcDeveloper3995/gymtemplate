@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Home, Users, LogOut, Dumbbell, CreditCard, Calendar, Activity } from "lucide-react";
+import DemoBanner from "@/components/DemoBanner";
 
 export const dynamic = "force-dynamic";
 
@@ -52,8 +53,9 @@ export default function DashboardLayout({
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 overflow-y-auto p-8 relative z-10">
-        <div className="max-w-6xl mx-auto pb-24">
+      <main className="flex-1 overflow-y-auto relative z-10 flex flex-col">
+        <DemoBanner />
+        <div className="p-8 max-w-6xl mx-auto pb-24 w-full">
           {children}
         </div>
       </main>
