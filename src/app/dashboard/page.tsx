@@ -169,159 +169,181 @@ export default async function DashboardHome() {
         <h1 className="text-3xl font-black text-white tracking-tight flex items-center gap-3">
           {greeting}, Administrador! <span className="text-2xl">{greetingIcon}</span>
         </h1>
-        <p className="text-zinc-400 font-medium mt-1 uppercase tracking-widest text-xs">Resumen general del gimnasio</p>
+        <p className="text-zinc-400 font-medium mt-1 uppercase tracking-widest text-xs">Resumen ejecutivo del gimnasio</p>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-green-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(34,197,94,0.15)] hover:shadow-[0_0_25px_rgba(34,197,94,0.4)] hover:border-green-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-green-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Ingresos del Mes</p>
-              <h3 className="text-4xl font-black text-green-500 drop-shadow-[0_0_10px_rgba(34,197,94,0.5)]">{formatter.format(totalEarnings)}</h3>
-            </div>
-            <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center text-green-500 shadow-[0_0_10px_rgba(34,197,94,0.5)]">
-              <DollarSign className="w-5 h-5 animate-pulse" />
+      {/* KPI Cards Strip (Compact 6-column layout on large screens) */}
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-6 gap-4 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '100ms', animationFillMode: 'backwards' }}>
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-green-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(34,197,94,0.1)] hover:border-green-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Ingresos (Mes)</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-green-400">{formatter.format(totalEarnings)}</h3>
+            <div className="w-8 h-8 bg-green-500/20 rounded-lg flex items-center justify-center text-green-400 shrink-0">
+              <DollarSign className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
 
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-orange-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(249,115,22,0.15)] hover:shadow-[0_0_25px_rgba(249,115,22,0.4)] hover:border-orange-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Membresías Activas</p>
-              <h3 className="text-4xl font-black text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]">{totalMemberships}</h3>
-            </div>
-            <div className="w-10 h-10 bg-orange-500/20 rounded-lg flex items-center justify-center text-orange-400 shadow-[0_0_10px_rgba(249,115,22,0.5)]">
-              <CreditCard className="w-5 h-5 animate-pulse" />
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-orange-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(249,115,22,0.1)] hover:border-orange-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Memb. Activas</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-white">{totalMemberships}</h3>
+            <div className="w-8 h-8 bg-orange-500/20 rounded-lg flex items-center justify-center text-orange-400 shrink-0">
+              <CreditCard className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
 
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-yellow-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(234,179,8,0.15)] hover:shadow-[0_0_25px_rgba(234,179,8,0.4)] hover:border-yellow-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-yellow-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Por Vencer (3 días)</p>
-              <h3 className="text-4xl font-black text-yellow-500 drop-shadow-[0_0_10px_rgba(234,179,8,0.5)]">{expiringSoon.length}</h3>
-            </div>
-            <div className="w-10 h-10 bg-yellow-500/20 rounded-lg flex items-center justify-center text-yellow-500 shadow-[0_0_10px_rgba(234,179,8,0.5)]">
-              <AlertTriangle className="w-5 h-5 animate-pulse" />
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-yellow-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(234,179,8,0.1)] hover:border-yellow-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Por Vencer (3d)</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-yellow-500">{expiringSoon.length}</h3>
+            <div className="w-8 h-8 bg-yellow-500/20 rounded-lg flex items-center justify-center text-yellow-500 shrink-0">
+              <AlertTriangle className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
 
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-red-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(239,68,68,0.15)] hover:shadow-[0_0_25px_rgba(239,68,68,0.4)] hover:border-red-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-red-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Membresías Vencidas</p>
-              <h3 className="text-4xl font-black text-red-500 drop-shadow-[0_0_10px_rgba(239,68,68,0.5)]">{expired.length}</h3>
-            </div>
-            <div className="w-10 h-10 bg-red-500/20 rounded-lg flex items-center justify-center text-red-500 shadow-[0_0_10px_rgba(239,68,68,0.5)]">
-              <XOctagon className="w-5 h-5 animate-pulse" />
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-red-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(239,68,68,0.1)] hover:border-red-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Vencidas</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-red-500">{expired.length}</h3>
+            <div className="w-8 h-8 bg-red-500/20 rounded-lg flex items-center justify-center text-red-500 shrink-0">
+              <XOctagon className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
 
-        {/* Nuevos Leads */}
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(168,85,247,0.15)] hover:shadow-[0_0_25px_rgba(168,85,247,0.4)] hover:border-purple-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-purple-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Nuevos Leads (Mes)</p>
-              <h3 className="text-4xl font-black text-purple-500 drop-shadow-[0_0_10px_rgba(168,85,247,0.5)]">{leadsThisMonth}</h3>
-            </div>
-            <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-500 shadow-[0_0_10px_rgba(168,85,247,0.5)]">
-              <Target className="w-5 h-5 animate-pulse" />
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-purple-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(168,85,247,0.1)] hover:border-purple-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Nuevos Leads</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-purple-400">{leadsThisMonth}</h3>
+            <div className="w-8 h-8 bg-purple-500/20 rounded-lg flex items-center justify-center text-purple-400 shrink-0">
+              <Target className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
 
-        {/* Retención */}
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-6 relative overflow-hidden group shadow-[0_0_15px_rgba(59,130,246,0.15)] hover:shadow-[0_0_25px_rgba(59,130,246,0.4)] hover:border-blue-500/60 transition-all duration-300">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-full -translate-y-1/2 translate-x-1/2 group-hover:scale-150 transition-transform duration-500"></div>
-          <div className="flex items-start justify-between relative z-10">
-            <div>
-              <p className="text-zinc-400 text-xs font-bold uppercase tracking-widest mb-1">Tasa de Retención</p>
-              <h3 className="text-4xl font-black text-blue-500 drop-shadow-[0_0_10px_rgba(59,130,246,0.5)]">{retentionRate}%</h3>
-            </div>
-            <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-500 shadow-[0_0_10px_rgba(59,130,246,0.5)]">
-              <HeartHandshake className="w-5 h-5 animate-pulse" />
+        <div className="bg-zinc-950/70 backdrop-blur-xl border border-blue-500/30 rounded-2xl p-4 relative overflow-hidden group shadow-[0_0_15px_rgba(59,130,246,0.1)] hover:border-blue-500/60 transition-all duration-300">
+          <p className="text-zinc-400 text-[10px] font-black uppercase tracking-widest mb-1">Retención</p>
+          <div className="flex items-center justify-between">
+            <h3 className="text-2xl font-black text-blue-400">{retentionRate}%</h3>
+            <div className="w-8 h-8 bg-blue-500/20 rounded-lg flex items-center justify-center text-blue-400 shrink-0">
+              <HeartHandshake className="w-4 h-4 animate-pulse" />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Alertas y Listas */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-8 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '250ms', animationFillMode: 'backwards' }}>
-        {/* Próximos a vencer */}
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-          <div className="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 className="text-lg font-bold text-white uppercase tracking-widest">Próximos a Vencer</h2>
-            <Link href="/dashboard/clients" className="text-xs text-primary font-bold hover:underline">Ver Todos</Link>
-          </div>
-          <div className="p-0">
-            {expiringSoon.length === 0 ? (
-              <p className="p-6 text-zinc-500 text-sm">No hay membresías por vencer.</p>
-            ) : (
-              <ul className="divide-y divide-white/5">
-                {expiringSoon.map(sub => (
-                  <li key={sub.id} className="p-4 px-6 flex justify-between items-center hover:bg-white/5 transition-colors">
-                    <div>
-                      <p className="text-white font-bold">{sub.client.name}</p>
-                      <p className="text-zinc-500 text-sm">{sub.plan.name}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-yellow-500 font-bold">{sub.endDate?.toLocaleDateString() || "-"}</p>
-                      <p className="text-zinc-500 text-xs">{sub.client.phone || "Sin teléfono"}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
-          </div>
+      {/* MASTER DASHBOARD LAYOUT: 2-Column Analytics + 1-Column Live Control Tower */}
+      <div className="grid grid-cols-1 xl:grid-cols-3 gap-6 mt-8">
+        {/* Left & Center: Financial Charts & Analytics (2 Columns) */}
+        <div className="xl:col-span-2 space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '200ms', animationFillMode: 'backwards' }}>
+          {/* Gráfico de Evolución de Ingresos */}
+          <RevenueChart />
+
+          {/* Gráficos de Distribución e Ingresos por Membresía */}
+          <MembershipCharts data={chartData} />
         </div>
 
-        {/* Vencidos Recientemente */}
-        <div className="bg-zinc-950/60 backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
-          <div className="p-6 border-b border-white/10 flex justify-between items-center">
-            <h2 className="text-lg font-bold text-white uppercase tracking-widest">Membresías Vencidas</h2>
-            <Link href="/dashboard/clients" className="text-xs text-primary font-bold hover:underline">Ir a Clientes</Link>
+        {/* Right Sidebar Column: Live Feed & Alerts (1 Column) */}
+        <div className="xl:col-span-1 space-y-6 animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '300ms', animationFillMode: 'backwards' }}>
+          {/* Actividad Reciente */}
+          <div className="bg-zinc-950/80 backdrop-blur-xl border border-white/10 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-white/[0.02]">
+              <div className="flex items-center gap-2">
+                <Activity className="w-4 h-4 text-primary animate-pulse" />
+                <h2 className="text-sm font-black text-white uppercase tracking-widest">Actividad en Vivo</h2>
+              </div>
+              <Link href="/dashboard/activity" className="text-xs text-primary font-bold hover:underline">Ver Todo</Link>
+            </div>
+            <div className="p-4 max-h-80 overflow-y-auto divide-y divide-white/5">
+              {activityFeed.length === 0 ? (
+                <p className="text-zinc-500 text-xs p-2">Sin actividad reciente.</p>
+              ) : (
+                activityFeed.map((item) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <div key={item.id} className="py-3 first:pt-0 last:pb-0 flex items-start gap-3">
+                      <div className={`w-8 h-8 rounded-lg ${item.bg} ${item.color} flex items-center justify-center shrink-0 mt-0.5`}>
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-xs font-bold text-white truncate">{item.title}</p>
+                        <p className="text-[11px] text-zinc-400 truncate">{item.subtitle}</p>
+                        <p className="text-[10px] text-zinc-500 mt-0.5">
+                          {item.date instanceof Date ? item.date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'Reciente'}
+                        </p>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
           </div>
-          <div className="p-0">
-            {expired.length === 0 ? (
-              <p className="p-6 text-zinc-500 text-sm">No hay clientes vencidos.</p>
-            ) : (
-              <ul className="divide-y divide-white/5">
-                {expired.slice(0,5).map(sub => (
-                  <li key={sub.id} className="p-4 px-6 flex justify-between items-center hover:bg-white/5 transition-colors">
-                    <div>
-                      <p className="text-white font-bold">{sub.client.name}</p>
-                      <p className="text-zinc-500 text-sm">{sub.plan.name}</p>
-                    </div>
-                    <div className="text-right">
-                      <p className="text-red-500 font-bold">{sub.endDate?.toLocaleDateString() || "-"}</p>
-                      <p className="text-zinc-500 text-xs">{sub.client.phone || "Sin teléfono"}</p>
-                    </div>
-                  </li>
-                ))}
-              </ul>
-            )}
+
+          {/* Próximos a Vencer */}
+          <div className="bg-zinc-950/80 backdrop-blur-xl border border-yellow-500/20 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-yellow-500/[0.02]">
+              <div className="flex items-center gap-2">
+                <AlertTriangle className="w-4 h-4 text-yellow-500" />
+                <h2 className="text-sm font-black text-white uppercase tracking-widest">Por Vencer (3 Días)</h2>
+              </div>
+              <Link href="/dashboard/clients" className="text-xs text-primary font-bold hover:underline">Gestionar</Link>
+            </div>
+            <div className="p-0 max-h-60 overflow-y-auto">
+              {expiringSoon.length === 0 ? (
+                <p className="p-5 text-zinc-500 text-xs">No hay membresías por vencer.</p>
+              ) : (
+                <ul className="divide-y divide-white/5">
+                  {expiringSoon.map(sub => (
+                    <li key={sub.id} className="p-3.5 px-5 flex justify-between items-center hover:bg-white/5 transition-colors">
+                      <div className="min-w-0 flex-1 mr-2">
+                        <p className="text-white text-xs font-bold truncate">{sub.client.name}</p>
+                        <p className="text-zinc-400 text-[11px] truncate">{sub.plan.name}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-yellow-400 font-bold text-xs block">{sub.endDate?.toLocaleDateString() || "-"}</span>
+                        <span className="text-zinc-500 text-[10px]">{sub.client.phone || "Sin tel."}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+          </div>
+
+          {/* Membresías Vencidas */}
+          <div className="bg-zinc-950/80 backdrop-blur-xl border border-red-500/20 rounded-2xl overflow-hidden shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+            <div className="p-5 border-b border-white/10 flex justify-between items-center bg-red-500/[0.02]">
+              <div className="flex items-center gap-2">
+                <XOctagon className="w-4 h-4 text-red-500" />
+                <h2 className="text-sm font-black text-white uppercase tracking-widest">Vencidos</h2>
+              </div>
+              <Link href="/dashboard/clients" className="text-xs text-primary font-bold hover:underline">Renovar</Link>
+            </div>
+            <div className="p-0 max-h-60 overflow-y-auto">
+              {expired.length === 0 ? (
+                <p className="p-5 text-zinc-500 text-xs">No hay clientes vencidos.</p>
+              ) : (
+                <ul className="divide-y divide-white/5">
+                  {expired.slice(0, 5).map(sub => (
+                    <li key={sub.id} className="p-3.5 px-5 flex justify-between items-center hover:bg-white/5 transition-colors">
+                      <div className="min-w-0 flex-1 mr-2">
+                        <p className="text-white text-xs font-bold truncate">{sub.client.name}</p>
+                        <p className="text-zinc-400 text-[11px] truncate">{sub.plan.name}</p>
+                      </div>
+                      <div className="text-right shrink-0">
+                        <span className="text-red-400 font-bold text-xs block">{sub.endDate?.toLocaleDateString() || "-"}</span>
+                        <span className="text-zinc-500 text-[10px]">{sub.client.phone || "Sin tel."}</span>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-
-      {/* Gráfico de Evolución de Ingresos Mensuales */}
-      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700 mt-8" style={{ animationDelay: '350ms', animationFillMode: 'backwards' }}>
-        <RevenueChart />
-      </div>
-
-      {/* Gráficos de Membresías */}
-      <div className="animate-in fade-in slide-in-from-bottom-8 duration-700" style={{ animationDelay: '450ms', animationFillMode: 'backwards' }}>
-        <MembershipCharts data={chartData} />
       </div>
     </div>
   );
