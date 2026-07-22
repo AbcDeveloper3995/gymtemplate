@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { Check, Dumbbell, MapPin, Zap, Target, Flame, Brain, TrendingUp, Trophy, Quote, Scale, Ruler, Infinity, Swords, X, Star, Clock, Phone } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { dataJson } from "@/data/dataJson";
 
 export default function LandingPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
+  const [loginError, setLoginError] = useState("");
   const [selectedPlan, setSelectedPlan] = useState("");
   const [showFab, setShowFab] = useState(false);
   const router = useRouter();
@@ -56,12 +58,21 @@ export default function LandingPage() {
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setLoginError("");
     setIsLoading(true);
+    const formData = new FormData(e.currentTarget);
+    const email = (formData.get("email") as string)?.trim() || "";
+    const password = (formData.get("password") as string) || "";
+
     setTimeout(() => {
       setIsLoading(false);
-      setIsLoginModalOpen(false);
-      router.push("/dashboard");
-    }, 1000);
+      if (email === dataJson.auth.email && password === dataJson.auth.password) {
+        setIsLoginModalOpen(false);
+        router.push("/dashboard");
+      } else {
+        setLoginError(`Credenciales incorrectas. Usa: ${dataJson.auth.email} / ${dataJson.auth.password}`);
+      }
+    }, 600);
   };
 
   return (
@@ -676,20 +687,26 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="text-2xl font-black text-white uppercase tracking-tight mb-2">Bienvenido de <span className="text-primary">Vuelta</span></h3>
-              <p className="text-zinc-400 text-sm mb-8 font-medium">Ingresa tus credenciales para acceder al panel.</p>
+              <p className="text-zinc-400 text-sm mb-6 font-medium">Usa <span className="text-primary font-bold">{dataJson.auth.email}</span> / <span className="text-primary font-bold">{dataJson.auth.password}</span></p>
               
+              {loginError && (
+                <div className="bg-red-500/20 border border-red-500/50 text-red-300 text-xs font-bold p-3 rounded-md mb-4 uppercase tracking-wider">
+                  {loginError}
+                </div>
+              )}
+
               <form className="space-y-4 text-left" onSubmit={handleLogin}>
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Correo Electrónico</label>
-                  <input type="email" required className="w-full bg-zinc-900 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="correo@ejemplo.com" />
+                  <input type="email" name="email" required defaultValue={dataJson.auth.email} className="w-full bg-zinc-900 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="correo@ejemplo.com" />
                 </div>
                 <div className="space-y-1">
                   <label className="text-xs font-bold text-zinc-400 uppercase tracking-widest">Contraseña</label>
-                  <input type="password" required className="w-full bg-zinc-900 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="••••••••" />
+                  <input type="password" name="password" required defaultValue={dataJson.auth.password} className="w-full bg-zinc-900 border border-white/10 rounded-md px-4 py-3 text-white focus:outline-none focus:border-primary transition-colors" placeholder="••••••••" />
                 </div>
                 
                 <Button type="submit" disabled={isLoading} className="w-full h-12 mt-4 bg-primary text-black hover:bg-yellow-500 hover:text-black font-bold uppercase tracking-widest transition-transform hover:scale-105 shadow-[0_0_20px_rgba(250,204,21,0.2)] border-none disabled:opacity-50 disabled:hover:scale-100">
-                  {isLoading ? "Ingresando..." : "Iniciar Sesión"}
+                  {isLoading ? "Verificando..." : "Iniciar Sesión"}
                 </Button>
               </form>
             </div>
